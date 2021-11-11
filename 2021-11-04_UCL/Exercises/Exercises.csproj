@@ -1,8 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <NoWarn>IDE0059;RCS1079;RCS1118;IDE1006;CS0219;CA1822;IDE0039</NoWarn>
+    <LangVersion>10</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

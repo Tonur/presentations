@@ -18,7 +18,7 @@ namespace Exercises
             DateTime date = EasterSunday();
 
             // Assert
-            throw new NotImplementedException();
+            date.Should().Be(expected);
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace Exercises
             DateTime date = StartOfThisPresentation();
 
             // Assert
-            throw new NotImplementedException();
+            date.Should().BeCloseTo(expectedStartOfLecture, TimeSpan.FromMinutes(5));
         }
 
         [Fact]
@@ -45,16 +45,20 @@ namespace Exercises
             DateTime date = RandomDateFromJuleKalender();
 
             // Assert
-            throw new NotImplementedException();
+            date.Should().BeOnOrAfter(firstDayToOpen)
+                .And.BeOnOrBefore(lastDayToOpen);
         }
 
         [Fact]
-        public void In_2021_Danish_daylight_saving_time_ends_25th_of_October_at_0300_GMT_Plus2()
+        public void In_2021_Danish_daylight_saving_time_ends_31th_of_October_at_0300_GMT_Plus2()
         {
             // Express expectedEndOfDst using the Fluent API from FluentAssertions.Extensions
 
             // Arrange
-            DateTimeOffset expectedEndOfDst = default;
+            DateTimeOffset expectedEndOfDst =
+                31.October(2021)
+                .At(3, 0)
+                .WithOffset(2.Hours());
 
             // Act
             DateTimeOffset date = DaylightSavingTimeEnd();

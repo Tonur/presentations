@@ -23,7 +23,8 @@ namespace Exercises
             Person result = GetPerson();
 
             // Assert
-            throw new NotImplementedException();
+            result.Should()
+                .BeEquivalentTo(expected, opt => opt.ComparingByMembers<Person>());
         }
 
         [Fact]
@@ -42,7 +43,8 @@ namespace Exercises
             Machine instance = GetInstance();
 
             // Assert
-            throw new NotImplementedException();
+            instance.Should()
+                .BeEquivalentTo(expectedInstance, opt => opt.Excluding(p => p.Id));
         }
 
         [Fact]
@@ -58,7 +60,8 @@ namespace Exercises
             ISuperComputer computer = GetSuperComputer();
 
             // Assert
-            throw new NotImplementedException();
+            computer.Should()
+                .NotBeEquivalentTo(expected, opt => opt.RespectingRuntimeTypes());
         }
 
         [Fact]
@@ -67,6 +70,13 @@ namespace Exercises
             // Arrange
             object expected = new
             {
+                Inner = new
+                {
+                    Inner = new
+                    {
+                        MyProperty = 42
+                    }
+                }
                 // Fill out the anonymous type, to match
                 // Inner.Inner.MyProperty = 42
             };
@@ -94,7 +104,8 @@ namespace Exercises
             AnnoyingClass result = GetResult();
 
             // Assert
-            throw new NotImplementedException();
+            result.Should()
+                .BeEquivalentTo(expected, opt => opt.ExcludingFields().Including(c => c.name));
         }
 
         [Fact]
@@ -110,7 +121,11 @@ namespace Exercises
             object mappedModel = ModelMapper.Map(dasModel);
 
             // Assert
-            throw new NotImplementedException();
+            mappedModel.Should()
+                .BeEquivalentTo(dasModel, opt => opt.Using<DateTime>(ctx =>
+                {
+                    ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1.Seconds());
+                }).WhenTypeIs<DateTime>());
         }
 
         [Fact]
@@ -126,7 +141,12 @@ namespace Exercises
             object mappedModel = ModelMapper.Map(dasModel);
 
             // Assert
-            throw new NotImplementedException();
+            mappedModel.Should()
+                .BeEquivalentTo(dasModel, opt => opt.Using<DateTime>(ctx =>
+                {
+                    ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1.Seconds());
+                }).When(o => o.Path.Contains("Created")));
+
         }
 
         #region Helpers
